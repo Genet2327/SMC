@@ -1,0 +1,63 @@
+﻿@model SMC_UI.Models.Result.ResultCreateDto
+
+<div class="modal fade" id="createResult" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Result</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="resultForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input hidden asp-for="StudentId" />
+                    <input hidden asp-for="CourseId" />
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Exam</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.Students.FirstOrDefault(c => c.Id == Model.StudentId)?.FirstName</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Course</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.Courses.FirstOrDefault(c => c.Id == Model.CourseId)?.Name</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select asp-for="ExamId" asp-items="@( new SelectList (Model.Exams, "Id", "Name"))" class="form-control">
+                            <option value="">Select Exams</option>
+                        </select>
+                        <span asp-validation-for="ExamId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Marks" class="form-control" placeholder="Marks">
+                        <span asp-validation-for="Marks" class="text-danger"></span>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a onClick="saveResult()" class="btn btn-success">Add</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

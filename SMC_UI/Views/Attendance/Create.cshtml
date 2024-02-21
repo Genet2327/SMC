@@ -1,0 +1,61 @@
+﻿@model SMC_UI.Models.Attendance.AttendanceMultipleStudentCreateDto
+
+@{
+    ViewData["Title"] = "Create New Attendace ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="border container backgroundWhite" style="padding:60px;">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Create an Attendance</h1>
+        </div>
+        <form asp-action="Create" class="user">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <select asp-for="CourseId" asp-items="@( new SelectList (Model.Courses, "Id", "Name"))" class="form-control">
+                    <option value="">Select Course</option>
+                </select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <select class="form-control chosen-select" multiple="multiple" asp-for="StudentId" asp-items="@( new SelectList (Model.Students, "Id", "FirstName"))"></select>
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <input asp-for="Date" type="date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="Status" type="checkbox" class="custom-control-input">
+                    <label class="custom-control-label" for="customCheck">
+                        Is Active
+                    </label>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-success btn-user btn-block">
+                <i class="fas fa-arrow-circle-down"></i> Save
+            </button>
+            <button asp-action="Index" class="btn btn-info btn-user btn-block">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </button>
+        </form>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                $(".chosen-select").chosen({
+                    no_results_text: "Oops, nothing found!"
+                })
+            });
+        });
+    </script>
+}
+
+

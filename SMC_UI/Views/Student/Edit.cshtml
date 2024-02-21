@@ -1,0 +1,90 @@
+﻿@model SMC_UI.Models.Student.StudentUpdateDto
+
+@{
+    ViewBag.Title = "Edit Student ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="border container backgroundWhite" style="padding:60px;">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Update an Student</h1>
+        </div>
+        <form asp-action="Edit" class="user">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input asp-for="FirstName" class="form-control" placeholder="First Name">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <input asp-for="MiddleName" class="form-control" placeholder="Middle Name">
+                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input asp-for="LastName" class="form-control" placeholder="Last Name">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+               
+                <div class="col-sm-6">
+                    <input asp-for="ChristeningName" class="form-control" placeholder="Christening Name">
+                    <span asp-validation-for="ChristeningName" class="text-danger"></span> 
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input asp-for="MotherName" class="form-control" placeholder="Mother Name">
+                    <span asp-validation-for="MotherName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <select asp-for="GenderId" asp-items="@Html.GetEnumSelectList<GenderType>()" placeholder="Gender" class="form-control">
+                    <option value="" disabled selected>Select Gender</option>
+                </select>
+                <span asp-validation-for="GenderId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input asp-for="Age" class="form-control" placeholder="Age">
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <input asp-for="OccupationType" class="form-control" placeholder="Occupation Type">
+                    <span asp-validation-for="OccupationType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input asp-for="Telephone" class="form-control" placeholder="Telephone">
+                <span asp-validation-for="Telephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="ClassRoomId" asp-items="@( new SelectList (Model.ClassRooms, "Id", "Name"))" placeholder="Class Rooms" class="form-control">
+                    <option value="" disabled selected>Select Class Room</option>
+                </select>
+                <span asp-validation-for="ClassRoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="Gread" asp-items="@Html.GetEnumSelectList<GreadType>()" placeholder="Gread" class="form-control">
+                    <option value="" disabled selected>Select Gread</option>
+                </select>
+                <span asp-validation-for="Gread" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <textarea asp-for="Adress" class="form-control" placeholder="Adress"></textarea>
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-success btn-user btn-block">
+                <i class="fas fa-arrow-circle-down"></i> Save
+            </button>
+            <button asp-action="Index" class="btn btn-info btn-user btn-block">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </button>
+        </form>
+    </div>
+</div>
+

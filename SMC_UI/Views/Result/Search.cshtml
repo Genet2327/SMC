@@ -1,0 +1,38 @@
+﻿@model SMC_UI.Models.Result.SearchCreateVm
+@{
+    ViewData["Title"] = "Create New Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="border container backgroundWhite" style="padding:60px;">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Results</h1>
+        </div>
+        <form asp-controller="Result" asp-action="GetDetails">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="ClassRoomId" asp-items="@( new SelectList (Model.ClassRoom, "Id", "Name"))" class="form-control">
+                    <option value="">Select Class Room</option>
+                </select>
+                <span asp-validation-for="ClassRoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="CourseId" asp-items="@( new SelectList (Model.Courses, "Id", "Name"))" class="form-control">
+                    <option value="">Select Course</option>
+                </select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="ExamId" asp-items="@( new SelectList (Model.Exams, "Id", "Name"))" class="form-control">
+                    <option value="">Select Exam</option>
+                </select>
+                <span asp-validation-for="ExamId" class="text-danger"></span>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                <i class="fas fa-search fa"></i> Search
+            </button>
+        </form>
+
+    </div>
+</div>

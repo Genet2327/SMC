@@ -1,0 +1,49 @@
+﻿@model SMC_UI.Models.ClassRoom.ClassRoomCreateDto
+
+@{
+    ViewData["Title"] = "Create New Class Room ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="border container backgroundWhite" style="padding:60px;">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Create an Class Room</h1>
+        </div>
+        <form asp-action="Create" class="user">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <input asp-for="Name" class="form-control" placeholder="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <input asp-for="TotalCourses" class="form-control" placeholder="Total Courses">
+                <span asp-validation-for="TotalCourses" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <select asp-for="SectionId" asp-items="@( new SelectList (Model.Sections, "Id", "Name"))" placeholder="Sections" class="form-control">
+                    <option value="" disabled selected>Select Sections</option>
+                </select>
+                <span asp-validation-for="SectionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="customCheck">
+                    <label class="custom-control-label" for="customCheck">
+                        Is Active
+                    </label>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-success btn-user btn-block">
+                <i class="fas fa-arrow-circle-down"></i> Save
+            </button>
+            <button asp-action="Index" class="btn btn-info btn-user btn-block">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </button>
+        </form>
+    </div>
+</div>
+
+

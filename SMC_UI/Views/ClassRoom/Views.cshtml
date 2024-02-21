@@ -1,0 +1,122 @@
+﻿@model SMC_UI.Models.ClassRoom.StudentRedByClassRoomNumberVm
+
+@{
+    ViewData["Title"] = "List Of Student Total Score Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a asp-action="Index" class="btn btn-info btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-arrow-left"></i>
+        </span>
+        <span class="text">View Class Rooms</span>
+    </a>
+    @*<a asp-controller="ClassRoom" asp-action="GenerateReportCsv" asp-route-Id="@Model.Id" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+    </a>*@
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 col-12">
+        <h6 class="m-0 font-weight-bold text-primary">List Of Student Total Score For @Model.ClassRoom.Name</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>Full Name</th>
+                        <th>Christening Name</th>
+                        <th>Total Course</th>
+                        <th>Final Score</th>
+                        <th>Rank</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{var nextRank = 1;}
+                    @foreach (var item in Model.Data.OrderByDescending(item => item.TotalScore))
+                    {
+                        <tr class="accordion-toggle" data-toggle="collapse" data-target="#AA_@(item.StudentId)">
+                            <td>
+                                @item.FullName
+                            </td>
+                            <td>
+                                @item.ChristeningName
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalCourses)
+                            </td>
+                            <td>
+                                @{
+                                    var final = (item.TotalScore / item.TotalCourses);
+                                }
+                                @final.ToString()
+                            </td>
+                            <td>@(nextRank++)</td>
+                            <td>
+                                <a target="_blank" asp-action="Certificate" asp-route-Id="@item.StudentId" class="btn btn-success  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info"></i>
+                                    </span>
+                                    <span class="text">Certificate</span>
+                                </a>
+                                <a target="_blank" asp-action="Transcript" asp-route-Id="@item.StudentId" class="btn btn-success  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info"></i>
+                                    </span>
+                                    <span class="text">View</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="hiddenRow" colspan="6">
+                                <div class="accordian-body collapse" id="AA_@(item.StudentId)">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr class="table-secondary">
+                                            <th>
+                                                Course Name
+                                            </th>
+                                            <th>
+                                                Total Score
+                                            </th>
+                                        </tr>
+                                        @foreach (var a in item.resultGroupByStudentIdVms)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => a.CourseName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => a.TotalScore)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('.accordian-body').on('show.bs.collapse', function () {
+                $(this).closest("table")
+                    .find(".collapse.in")
+                    .not(this)
+                    .collapse('toggle')
+            });
+        });
+
+    </script>
+}
+

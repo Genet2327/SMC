@@ -1,0 +1,203 @@
+﻿@model SMC_UI.Models.Result.SearchCreateVm
+@{
+    ViewData["Title"] = "Create New Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3 col-12">
+        <h6 class="m-0 font-weight-bold text-primary">List Of Student </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>Full Name</th>
+                        <th>Mother Name</th>
+                        <th>Christening Name</th>
+                        <td>Class Room</td>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Students)
+                    {
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td>@item.MotherName</td>
+                            <td>@item.ChristeningName</td>
+                            <td>@item.ClassRoom.Name</td>
+                            <td>
+                                <a onclick="getResult(@item.Id, @Model.CourseId, @Model.ExamId)" class="btn btn-success  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Add</span>
+                                </a>
+                                <a class="btn btn-primary btn-icon-split accordion-toggle" data-toggle="collapse" data-target="#result_@(item.Id)">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info"></i>
+                                    </span>
+                                    <span class="text">View</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="hiddenRow" colspan="6">
+                                <div class="accordian-body collapse" id="result_@(item.Id)">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <tr class="table-secondary">
+                                            <th>Course Name</th>
+                                            <th>Exam Name</th>
+                                            <th>Marks</th>
+                                            <td></td>
+                                        </tr>
+                                        @foreach (var a in item.Resuls)
+                                        {
+                                            <tr>
+                                                <td>@a.Course.Name</td>
+                                                <td>@a.Exam.Name</td>
+                                                <td>@a.Marks</td>
+                                                <td>
+                                                    <a onclick="editGetResult(@a.Id)" class="btn btn-primary  btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-edit"></i>
+                                                        </span>
+                                                        <span class="text">Edit</span>
+                                                    </a>
+                                                    <a onclick="deleteResult(@a.Id)" class="btn btn-danger  btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-trash"></i>
+                                                        </span>
+                                                        <span class="text">Delete</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="div_to_load_PartialView"></div>
+
+
+@section scripts {
+    <script>
+        //function getStudent() {
+        //    $.ajax({
+        //        url: $('form').attr('action'),
+        //        type: 'GET',
+        //        data: $('form').serialize(),
+        //        dataType: "html",
+        //        success: function (data) {
+        //            $('#div_to_load_stdentlist').html(data);
+        //        },
+        //        error: function () {
+        //        }
+        //    });
+        //}
+
+        function editGetResult(id) {
+            $.ajax({
+                url: `@Url.Action("Edit","Result")`,
+                type: "GET",
+                data: { id: id },
+                dataType: "html",
+                success: function (data) {
+                    $('#div_to_load_PartialView').html(data);
+                    $('#editResult').modal('show');
+                },
+                error: function () {
+                    alert('fail');
+                    window.location.reload();
+                }
+            });
+        };
+
+        function saveEditResult() {
+            var data = $('#editResultform').serialize();
+
+            $.ajax({
+                type: "POST",
+                url: `@Url.Action("Edit","Result")`,
+                data: data,
+                success: function (data) {
+                    $('#editResult').modal('hide');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('fail');
+                    window.location.reload();
+                }
+            });
+        };
+
+        function getResult(studnetId, courseId, examId) {
+            $.ajax({
+                url: `@Url.Action("Create","Result")`,
+                type: "GET",
+                data: { studentId: studnetId, courseId: courseId, examId: examId },
+                dataType: "html",
+                success: function (data) {
+                    $('#div_to_load_PartialView').html(data);
+                    $('#createResult').modal('show');
+                },
+                error: function () {
+                    alert('fail');
+                    window.location.reload();
+                }
+            });
+        };
+
+        function saveResult() {
+            var data = $('#resultForm').serialize();
+
+            $.ajax({
+                type: "POST",
+                url: `@Url.Action("Create","Result")`,
+                data: data,
+                success: function (data) {
+                    $('#createResult').modal('hide');
+                    window.location.reload();
+                },
+                error: function () {
+                    alert('fail');
+                    window.location.reload();
+                }
+            });
+        };
+
+        function deleteResult(id) {
+
+            $.ajax({
+                url: `@Url.Action("Delete","Result")`,
+                type: 'Delete',
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.status == "true") {
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.msg)
+                    }
+                },
+                error: function () {
+                    alert('fail');
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+    }
+

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SMC_UI.Models.ClassRoom.ClassRoomReadDto>
+
+@{
+    ViewData["Title"] = "Class Room Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a asp-action="Create" class="btn btn-success  btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Create ClassRoom</span>
+    </a>
+    @* <a asp-controller="ClassRoom" asp-action="Csv" asp-route-Id="@Model.Id" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+    </a>*@
+</div>
+
+<div class="card shadow mb-4">
+        <div class="card-header py-3 col-12">
+        <h6 class="m-0 font-weight-bold text-primary">List Of Class Room</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>Classe Room Name</th>
+                        <th>TotalCourses</th>
+                        <th>Section</th> 
+                        <th>IsActive</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                              @Html.DisplayFor(modelItem => item.TotalCourses)
+                          </td>
+                          <td>
+                              @Html.DisplayFor(modelItem => item.Section.Name)
+                          </td>
+                          <td>
+                              @Html.DisplayFor(modelItem => item.IsActive)
+                          </td>
+                            <td>
+                                <a asp-action="Views" asp-route-Id="@item.Id" class="btn btn-success  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info"></i>
+                                    </span>
+                                    <span class="text">Views</span>
+                                </a>
+                                <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
+                                <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

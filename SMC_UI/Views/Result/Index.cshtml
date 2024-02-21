@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SMC_UI.Models.Result.ResulReadDto>
+@{
+    ViewData["Title"] = "Result Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a asp-action="Search" class="btn btn-success  btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Create Result</span>
+    </a>
+    @* <a asp-controller="Round" asp-action="Csv" asp-route-Id="@Model.Id" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+    </a>*@
+</div>
+
+<div class="card shadow mb-4">
+        <div class="card-header py-3 col-12">
+        <h6 class="m-0 font-weight-bold text-primary">List Of Results </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>
+                            Marks 
+                        </th>
+                        <th>
+                            Course Name
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Marks)
+                            </td>                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Course.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Student.FirstName)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="text">Edit</span>
+                                </a>
+                                <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger  btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

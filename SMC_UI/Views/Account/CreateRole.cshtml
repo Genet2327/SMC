@@ -1,0 +1,31 @@
+﻿@model SMC_UI.Models.Role.RoleCreateDto
+
+@{
+    ViewData["Title"] = "New Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Course</h2>
+<div class="border container" style="padding:30px;">
+    <hr />
+    <form asp-action="CreateRole">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="Name" class="control-label col-md-1"></label>
+            <div class="col-md-4">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2 offset-1">
+                <input type="submit" value="Save" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-2  btn btn-success form-control text-white">
+                @Html.ActionLink("Back ", "Index", new { @class = "text-white" })
+            </div>
+        </div>
+    </form>
+</div>
+
+
